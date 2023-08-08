@@ -1,0 +1,39 @@
+{
+  "name": "react-evefyou-hooks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EvefyouFE/react-evefyou-hooks.git"
+  },
+  "keywords": [
+    "react",
+    "hook",
+    "state",
+    "defineState",
+    "evefyou"
+  ],
+  "author": "EvefyouFE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EvefyouFE/react-evefyou-hooks/issues"
+  },
+  "homepage": "https://github.com/EvefyouFE/react-evefyou-hooks#readme",
+  "peerDependencies": {
+    "@types/react": ">=16.8.0",
+    "ahooks": ">=3.7.6",
+    "ramda": ">=0.29.0",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "recoil": ">=0.7.7",
+    "typescript": ">=5.0.2"
+  },
+  "devDependencies": {
+    "@types/ramda": "^0.29.3"
+  }
+}
