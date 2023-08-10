@@ -1,8 +1,9 @@
-import { curry, includes, is } from "ramda"
+import { curry, includes, is, omit } from "ramda"
 import React, { SetStateAction, useMemo, useState } from "react"
 import { GetCallback, GetRecoilValue, RecoilState, RecoilValueReadOnly, SelectorCallbackInterface, atom, selector, useRecoilState, useRecoilValue } from "recoil"
 import { deepMergeObjectByKeys, deepSetObjectByKeys } from "./utils/object"
-import { ActionFn, ActionMethods, Actions, CallbackState, DefaultMethods, DefaultSetMethods, GetterFn, GetterMethods, Getters, ItemsDefaultMethods, RecoilCallback, RecoilCallbackState, RecoilStateConfig, RecoilValueAsyncMethods, RecoilValueConfig, RecoilValueMethods, Recordable, SelectorDefaultMethods, SetMethods, SetterFn, SetterMethods, Setters, StateConfig, StateMethods, UseRecoilValue, UseRecoilValueReturnType, UseState, UseStateReturnType } from "react-evefyou-hooks";
+import { ActionFn, ActionMethods, Actions, CallbackState, DefaultMethods, DefaultSetMethods, GetterFn, GetterMethods, Getters, ItemsDefaultMethods, RecoilCallback, RecoilCallbackState, RecoilStateConfig, RecoilValueAsyncMethods, RecoilValueConfig, RecoilValueMethods, SelectorDefaultMethods, SetMethods, SetterFn, SetterMethods, Setters, StateConfig, StateMethods, UseRecoilValue, UseRecoilValueReturnType, UseState, UseStateReturnType } from "./types/state";
+import { Recordable } from "./types/global";
 
 function getterMethods<
   S,
@@ -79,7 +80,7 @@ function defineUseCallbackRecoilState<
 
   function useCallbackState(): [S, CBM] {
     const [stateAtom, methods] = is(Function, state)
-      ? (state as Function)() as [RecoilState<S>, CBM]
+      ? (state as RecoilCallbackState<S, SetMethods<S>>)()
       : [state as RecoilState<S>, undefined]
     const [s, set] = useRecoilState(stateAtom);
     return [s, { set, ...methods } as CBM];
@@ -150,11 +151,11 @@ function getDefaultMethods<
 >(
   name: N,
   defineState: S,
-  { set, ...rest }: CBM,
+  cbm: CBM,
 ) {
   return {
     get: () => defineState,
-    ...rest,
+    ...omit(['set'], cbm),
     [name]: defineState,
   } as (DefaultMethods<S, N> & CBM)
 }

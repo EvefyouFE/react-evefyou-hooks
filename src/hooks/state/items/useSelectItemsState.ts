@@ -4,7 +4,7 @@ import React from "react";
 import { KeyItem, defineKeyItemsState } from "./useKeyItemsState";
 import { defineKeysState } from "./useKeysState";
 import { defineUseState } from "../../../state";
-import { useRelationState } from "../../core/useRelationState";
+import useRelationState from "../../core/useRelationState";
 
 export interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React.Key> {
     itemsState: T[];

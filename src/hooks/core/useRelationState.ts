@@ -2,17 +2,13 @@ import { SetStateAction, useCallback, useRef } from "react";
 import { is } from "ramda";
 import { useUnmountEffect } from "./useUnmountEffect";
 import { deepCompareObj } from "../../utils/object";
-import { SetMethods } from "react-evefyou-hooks";
+import { SetMethods } from "../../types/state";
 
 
 export type RelationHookMap<S> = {
   [key in keyof S]: [S[key], React.Dispatch<SetStateAction<S[key]>> | SetMethods<S[key]>];
 };
-export type RelationMethods<S, M extends SetMethods<S[keyof S]>> = {
-  [key in keyof S]: M;
-};
-
-type RelationStateMethods<S extends object, RHM extends RelationHookMap<S>> = SetMethods<S> & {
+export type RelationStateMethods<S extends object, RHM extends RelationHookMap<S>> = SetMethods<S> & {
   [key in keyof S]: RHM[key] extends [S[key], infer M]
   ? M extends React.Dispatch<SetStateAction<S[key]>>
   ? SetMethods<S[key]>
@@ -20,7 +16,7 @@ type RelationStateMethods<S extends object, RHM extends RelationHookMap<S>> = Se
   : unknown
   : unknown;
 };
-type UseRelationStateReturnType<S extends object, RHM extends RelationHookMap<S>> = [S, RelationStateMethods<S, RHM>]
+export type UseRelationStateReturnType<S extends object, RHM extends RelationHookMap<S>> = [S, RelationStateMethods<S, RHM>]
 
 export function useRelationState<
   RHM extends RelationHookMap<any>,
@@ -69,3 +65,5 @@ export function useRelationState<
   relationMethods.set = set
   return [relationState, relationMethods]
 }
+
+export default useRelationState;

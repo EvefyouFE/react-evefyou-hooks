@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { KeyItem, defineKeyItemsState } from "./useKeyItemsState";
-import { useRelationState } from "../../core/useRelationState";
+import useRelationState from "../../core/useRelationState";
 import { defineUseState } from "../../../state";
 
 export interface ActiveItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React.Key> {

@@ -1,11 +1,26 @@
 {
   "name": "react-evefyou-hooks",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "",
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:tsc": "tsc",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -25,15 +40,26 @@
   },
   "homepage": "https://github.com/EvefyouFE/react-evefyou-hooks#readme",
   "peerDependencies": {
-    "@types/react": ">=16.8.0",
     "ahooks": ">=3.7.6",
     "ramda": ">=0.29.0",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "recoil": ">=0.7.7",
-    "typescript": ">=5.0.2"
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0",
+    "recoil": ">=0.7.7"
   },
   "devDependencies": {
-    "@types/ramda": "^0.29.3"
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@types/node": "^20.4.9",
+    "@types/ramda": "^0.29.0",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.5.1"
   }
 }

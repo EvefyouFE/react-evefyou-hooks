@@ -1,5 +1,5 @@
 import { clone, equals, is, mergeDeepRight } from 'ramda';
-import { Recordable } from "react-evefyou-hooks";
+import { Recordable } from "../types/global";
 
 export function deepMergeObjectByKeys(
   keys: readonly any[],

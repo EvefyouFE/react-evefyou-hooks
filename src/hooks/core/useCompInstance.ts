@@ -44,3 +44,5 @@ export function useCompInstance<
 
     return [componentRef, instance]
 }
+
+export default useCompInstance;

@@ -1,7 +1,7 @@
 import React from "react";
 import { includes } from "ramda";
 import { defineUseState } from "../../../state";
-import { Recordable } from "react-evefyou-hooks";
+import { Recordable } from "../../../types/global";
 
 export interface KeyItem<K = React.Key> extends Recordable {
     key: K
