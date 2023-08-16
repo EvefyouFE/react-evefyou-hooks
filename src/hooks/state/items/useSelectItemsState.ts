@@ -49,6 +49,9 @@ export const defineSelectItemsState = <
                     return ks
                 })
             },
+            reSelect(keys: K[]) {
+                this.selectKeysState.set(keys)
+            },
             addAndSelect(item: T) {
                 this.itemsState.addByKey(item)
                 this.select([item.key])
