@@ -39,26 +39,35 @@ export const defineSelectItemsState = <
                 return state.itemsState.filter(ims => includes(ims.key, state.selectKeysState))
             }
         },
-        actions: {
+        setters: {
             select(keys: K[]) {
-                const newSelectKeys = keys.filter(k => !includes(k, this[name].selectKeysState))
-                if (newSelectKeys.length) {
-                    this.selectKeysState.set(ks => [...ks, ...newSelectKeys])
-                }
+                this.selectKeysState.set(ks => {
+                    const newSelectKeys = keys.filter(k => !includes(k, ks))
+                    if (newSelectKeys.length) {
+                        return [...ks, ...newSelectKeys]
+                    }
+                    return ks
+                })
             },
             addAndSelect(item: T) {
                 this.itemsState.addByKey(item)
                 this.select([item.key])
             },
+            addOrUpdateAndSelect(item: T) {
+                this.itemsState.addOrUpdateByKey(item)
+                this.select([item.key])
+            },
+            clear() {
+                this.itemsState.clear()
+                this.selectKeysState.clear()
+            },
+        },
+        actions: {
             removeByKey(key: K) {
                 const idx = this[name].itemsState.findIndex(({ key: k }) => k === key)
                 idx !== -1 && this.itemsState.set(ims => drop(idx, ims))
                 const idxK = this[name].selectKeysState.findIndex(k => k === key)
                 idxK !== -1 && this.selectKeysState.set(ks => drop(idxK, ks))
-            },
-            clear() {
-                this.itemsState.clear()
-                this.selectKeysState.clear()
             },
         }
     })
