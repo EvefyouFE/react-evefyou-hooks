@@ -8,6 +8,6 @@
   },
   "include": [
     "vite.config.ts",
-    "src/types/*.d.ts"
+    "package.json"
   ]
 }

@@ -1,24 +1,30 @@
 {
   "name": "react-evefyou-hooks",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "",
   "type": "module",
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./cjs/index.cjs.js",
+  "module": "./es/index.js",
+  "types": "./index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs.js"
+      "import": "./es/index.js",
+      "require": "./cjs/index.cjs.js",
+      "types": "./index.d.ts"
     }
   },
   "files": [
-    "dist"
+    "es",
+    "cjs",
+    "index.d.ts"
   ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "build:tsc": "tsc",
+    "clean": "rimraf node_modules",
+    "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
+    "clean:build": "rimraf es && rimraf cjs && rimraf css && rimraf dist && rimraf locale",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -30,6 +36,7 @@
     "react",
     "hook",
     "state",
+    "like pinia",
     "defineState",
     "evefyou"
   ],
@@ -47,7 +54,6 @@
     "recoil": ">=0.7.7"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.1.2",
     "@types/node": "^20.4.9",
     "@types/ramda": "^0.29.0",
     "@types/react": "^18.2.15",
@@ -56,6 +62,7 @@
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.45.0",
+    "rimraf": "^5.0.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.1.6",
