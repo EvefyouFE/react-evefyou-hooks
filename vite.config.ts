@@ -11,6 +11,7 @@ import react from '@vitejs/plugin-react'
 import path from "path";
 import dts from 'vite-plugin-dts';
 import pkg from './package.json';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 const pathResolve = (v: string) => path.resolve(__dirname, v)
 
@@ -19,7 +20,7 @@ const regexOfPackages = externalPackages
   .map(packageName => new RegExp(`^${packageName}(\\/.*)?`));
 
 export default defineConfig({
-  plugins: [react(), dts({ rollupTypes: true })],
+  plugins: [react(), dts({ rollupTypes: true }), tsconfigPaths()],
   build: {
     minify: true,
     reportCompressedSize: true,
@@ -35,15 +36,6 @@ export default defineConfig({
       formats: ["es", "cjs"],
     },
     rollupOptions: {
-      output: {
-        manualChunks: () => {
-          return 'index'
-        },
-        chunkFileNames: () => {
-          return '[format]/[name]/index.js'
-        },
-        assetFileNames: '[ext]/[name].[ext]',
-      },
       external: regexOfPackages
     }
   }
