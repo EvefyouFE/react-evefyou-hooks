@@ -8,14 +8,10 @@
  */
 
 import React, { useState } from "react";
-import { KeyItem, defineKeyItemsState } from "./useKeyItemsState";
+import { defineKeyItemsState } from "./useKeyItemsState";
 import useRelationState from "../../core/useRelationState";
-import { defineUseState } from "../../../state";
-
-export interface ActiveItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React.Key> {
-    itemsState: T[];
-    activeKeyState?: K;
-}
+import { defineUseState } from "@/state/defineUseState";
+import { ActiveItem, KeyItem } from "@/types/hooks";
 
 export const defineActiveItemsState = <
     T extends KeyItem<K>,

@@ -8,18 +8,7 @@
  */
 import { useMemo } from "react";
 import { usePropsState } from "./usePropsState";
-
-export interface UsePropsSetMethods<T> {
-    init: (props: T) => void;
-    initDebug: (props: T, name?: string) => void;
-    setProps: (props: T) => void;
-    setPropsState: React.Dispatch<React.SetStateAction<T>>;
-    resetProps: (props: T) => void;
-}
-
-export type UsePropsMethods<T> = UsePropsSetMethods<T>;
-
-export type UsePropsReturnType<T> = [T, UsePropsMethods<T>]
+import { UsePropsReturnType, UsePropsSetMethods } from "@/types/hooks";
 
 export function useProps<T>(props: T): UsePropsReturnType<T> {
     const [propsState, setPropsState] = usePropsState<T>(props);

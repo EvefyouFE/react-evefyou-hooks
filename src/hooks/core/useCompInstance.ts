@@ -8,13 +8,8 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { useUnmountEffect } from "./useUnmountEffect";
+import { BaseInstance, UseCompInstanceReturnType } from "@/types/hooks";
 
-export type UseCompInstanceReturnType<P, T extends BaseInstance<P>> = [React.MutableRefObject<T | null>, Partial<T>]
-
-export interface BaseInstance<P> {
-    init: (props: P) => void;
-    initDebug?: (props: P, name?: string) => void;
-}
 
 export function useCompInstance<
     T extends BaseInstance<P>,
@@ -52,5 +47,3 @@ export function useCompInstance<
 
     return [componentRef, instance]
 }
-
-export default useCompInstance;

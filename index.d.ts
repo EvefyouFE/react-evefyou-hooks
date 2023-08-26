@@ -5,17 +5,17 @@ import { RecoilState } from 'recoil';
 import { RecoilValueReadOnly } from 'recoil';
 import { SetStateAction } from 'react';
 
-declare interface ActionFn<Args extends Array<any> = any, R = any> {
+export declare interface ActionFn<Args extends Array<any> = any, R = any> {
     (...args: Args): R;
 }
 
-declare type ActionMethods<A extends Actions> = {
+export declare type ActionMethods<A extends Actions> = {
     [P in keyof A]: A extends Record<P, ActionFn<infer Args, infer R>> ? ActionFn<Args, R> : unknown;
 };
 
-declare type Actions = Recordable<ActionFn>;
+export declare type Actions = Recordable<ActionFn>;
 
-export declare interface ActiveItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_3.Key> {
+export declare interface ActiveItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React.Key> {
     itemsState: T[];
     activeKeyState?: K;
 }
@@ -25,14 +25,14 @@ export declare interface BaseInstance<P> {
     initDebug?: (props: P, name?: string) => void;
 }
 
-declare interface BaseSelectorStateConfig<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters> {
+export declare interface BaseSelectorStateConfig<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters> {
     name: N;
     state: S;
     getters?: G & ThisType<PropName<S, N> & GetterMethods<S, G> & Pick<SelectorDefaultMethods<S, N>, 'getState'>>;
     setters?: SE & ThisType<(S extends any[] ? SelectorItemsDefaultMethods<S, N> : SelectorDefaultMethods<S, N>) & GetterMethods<S, G> & SetterMethods<SE>>;
 }
 
-declare interface CallbackState<S, CBM extends SetMethods<S>> {
+export declare interface CallbackState<S, CBM extends SetMethods<S>> {
     (initialState?: S): [S, CBM];
 }
 
@@ -44,11 +44,11 @@ export declare function deepMergeObjectByKeys(keys: readonly any[], value: any, 
 
 export declare function deepSetObjectByKeys(keys: readonly any[], value: any, obj: Recordable): Recordable;
 
-declare type DefaultMethods<S = any, N extends string = 'state'> = DefaultSetMethods<S> & {
+export declare type DefaultMethods<S = any, N extends string = 'state'> = DefaultSetMethods<S> & {
     get: () => S;
 } & PropName<S, N>;
 
-declare type DefaultSetMethods<S = any> = SetMethods<S> & {
+export declare type DefaultSetMethods<S = any> = SetMethods<S> & {
     setProps: (prop: Partial<S>) => void;
     reset: () => void;
     deepSet: <KS extends readonly ExtractNestedKeys<S>[]>(keys: KS, any: NestedPropType<KS, S>) => void;
@@ -146,58 +146,83 @@ export declare const defineSelectItemsState: <T extends KeyItem<K>, K = T extend
 
 export declare function defineUseState<S extends CallbackState<any, any> | any, N extends string = 'state', G extends Getters<any> = Getters<S extends CallbackState<infer St, any> ? St : S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>>(config: StateConfig<S, N, G, SE, A, CBM>): UseState<S extends CallbackState<infer St, any> ? St : S, N, G, SE, A, CBM>;
 
-declare type ExtractNestedKeys<T, Excludes = 'children', UWT = UnwrapNullable<T>> = IsAny<UWT> extends true ? never : IsArray<UWT> extends true ? never : UWT extends {
+export declare type ExtractNestedKeys<T, Excludes = 'children', UWT = UnwrapNullable<T>> = IsAny<UWT> extends true ? never : IsArray<UWT> extends true ? never : UWT extends {
     [key: string]: string | number | object | undefined;
 } ? never : UWT extends object ? {
     [K in keyof UWT]: K extends Excludes ? K : K | ExtractNestedKeys<UWT[K], Excludes>;
 }[keyof UWT] : never;
 
-declare type FirstElement<T extends readonly any[]> = T extends readonly [infer First, ...any[]] ? First : never;
+/**
+ * 字符串常量联合类型会被 |string 变为string类型，不支持any类型
+ */
+export declare type ExtractNestedValues<T, Excludes = 'children', UWT = UnwrapNullable<T>> = IsAny<UWT> extends true ? never : IsArray<UWT> extends true ? never : UWT extends {
+    [key: string]: string | number | object | undefined;
+} ? never : UWT extends object ? {
+    [K in keyof UWT]: K extends Excludes ? never : IsAny<UWT[K]> extends true ? never : UWT[K] | ExtractNestedValues<UWT[K], Excludes>;
+}[keyof UWT] : never;
 
-declare interface GetterFn<S = any, Args extends Array<any> = any, R = any> {
+export declare type FifthElement<T extends readonly any[]> = T extends readonly [any, any, any, any, infer Fifth, ...any[]] ? Fifth : never;
+
+export declare type FirstElement<T extends readonly any[]> = T extends readonly [infer First, ...any[]] ? First : never;
+
+export declare type FourthElement<T extends readonly any[]> = T extends readonly [any, any, any, infer Fourth, ...any[]] ? Fourth : never;
+
+export declare interface GetterFn<S = any, Args extends Array<any> = any, R = any> {
     (...args: [S, ...Args]): R;
 }
 
-declare type GetterMethods<S = any, G extends Getters<S> = Getters<S>> = {
+export declare type GetterMethods<S = any, G extends Getters<S> = Getters<S>> = {
     [P in keyof G]: G extends Record<P, GetterFn<S, infer Args, infer R>> ? (...args: Args) => R : unknown;
 };
 
-declare type Getters<S = any> = Recordable<GetterFn<S>>;
+export declare type Getters<S = any> = Recordable<GetterFn<S>>;
 
-declare type IsAny<T> = 0 extends 1 & T ? true : false;
+export declare type IsAny<T> = 0 extends 1 & T ? true : false;
 
-declare type IsArray<T> = T extends Array<any> ? true : false;
+export declare type IsArray<T> = T extends Array<any> ? true : false;
 
-declare type IsEmptyArray<T extends readonly any[]> = T extends readonly [] ? true : false;
+export declare type IsEmptyArray<T extends readonly any[]> = T extends readonly [] ? true : false;
 
-declare type IsObject<T> = T extends object ? true : false;
+export declare type IsKeyof<P, O> = P extends keyof O ? true : false;
 
-declare type ItemsDefaultMethods<T = any, N extends string = 'state'> = DefaultMethods<T[], N> & ItemsDefaultSetMethods<T>;
+export declare type IsNullable<T> = T extends Nullable<any> ? true : false;
 
-declare type ItemsDefaultSetMethods<T = any> = {
+export declare type IsObject<T> = T extends object ? true : false;
+
+export declare type IsStringLiteralUnion<T> = string extends T ? false : true;
+
+export declare type ItemsDefaultMethods<T = any, N extends string = 'state'> = DefaultMethods<T[], N> & ItemsDefaultSetMethods<T>;
+
+export declare type ItemsDefaultSetMethods<T = any> = {
     add: (newItem: T) => void;
     remove: (item: T) => void;
     removes: (items: T[]) => void;
     clear: () => void;
 };
 
-export declare interface KeyItem<K = React_3.Key> extends Recordable {
+export declare interface KeyItem<K = React.Key> extends Recordable {
     key: K;
 }
 
-declare type NestedPropType<KS extends readonly any[], O> = IsObject<O> extends true ? FirstElement<KS> extends keyof O ? IsEmptyArray<Tail<KS>> extends true ? O[FirstElement<KS>] : O[FirstElement<KS>] extends Nullable<infer NO> ? NestedPropType<Tail<KS>, NO> : NestedPropType<Tail<KS>, O[FirstElement<KS>]> : never : O;
+export declare type LastElement<T extends readonly any[]> = T extends readonly [...any[], infer Last] ? Last : never;
 
-declare type Nullable<T> = T | null;
+export declare type NestedPropType<KS extends readonly any[], O> = IsObject<O> extends true ? FirstElement<KS> extends keyof O ? IsEmptyArray<Tail<KS>> extends true ? O[FirstElement<KS>] : O[FirstElement<KS>] extends Nullable<infer NO> ? NestedPropType<Tail<KS>, NO> : NestedPropType<Tail<KS>, O[FirstElement<KS>]> : never : O;
 
-declare type PropName<V = any, N extends string = string> = {
+export declare type Nullable<T> = T | null;
+
+export declare type PropName<V = any, N extends string = string> = {
     [K in N]: V;
 };
 
-declare interface RecoilCallback<CBM = object> {
+export declare interface RecoilCallback<CBM = object> {
     (): CBM;
 }
 
-declare interface RecoilStateConfig<S, RS extends CallbackState<RecoilState<S>, any> | RecoilState<S>, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = RS extends CallbackState<any, infer M> ? M : SetMethods<any>> {
+export declare interface RecoilCallbackState<S, CBM extends SetMethods<S>> {
+    (): [RecoilState<S>, CBM];
+}
+
+export declare interface RecoilStateConfig<S, RS extends CallbackState<RecoilState<S>, any> | RecoilState<S>, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = RS extends CallbackState<any, infer M> ? M : SetMethods<any>> {
     name: N;
     defaultValue: S;
     useState: RS;
@@ -206,16 +231,16 @@ declare interface RecoilStateConfig<S, RS extends CallbackState<RecoilState<S>, 
     actions?: A & ThisType<(S extends Array<infer T> ? ItemsDefaultMethods<T, N> : DefaultMethods<S extends CallbackState<infer St, any> ? St : S, N>) & GetterMethods<S extends CallbackState<infer St, any> ? St : S, G> & SetterMethods<SE> & ActionMethods<A> & CBM>;
 }
 
-declare type RecoilValueAsyncMethods<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends Recordable<any> = object> = RecoilValueMethods<S, N, G, SE, CBM> & ActionMethods<A>;
+export declare type RecoilValueAsyncMethods<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends Recordable<any> = object> = RecoilValueMethods<S, N, G, SE, CBM> & ActionMethods<A>;
 
-declare interface RecoilValueConfig<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CB extends RecoilCallback = RecoilCallback> extends BaseSelectorStateConfig<S, N, G, SE> {
+export declare interface RecoilValueConfig<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CB extends RecoilCallback = RecoilCallback> extends BaseSelectorStateConfig<S, N, G, SE> {
     useFn?: CB;
     actions?: A & ThisType<(S extends any[] ? SelectorItemsDefaultMethods<S, N> : SelectorDefaultMethods<S, N>) & GetterMethods<S, G> & SetterMethods<SE> & ActionMethods<A> & (CB extends RecoilCallback<infer CBM> ? CBM : object)>;
 }
 
-declare type RecoilValueMethods<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, CBM extends Recordable<any> = object> = GetterMethods<S, G> & SetterMethods<SE> & (S extends any[] ? SelectorItemsDefaultMethods<S, N> : SelectorDefaultMethods<S, N>) & CBM;
+export declare type RecoilValueMethods<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, CBM extends Recordable<any> = object> = GetterMethods<S, G> & SetterMethods<SE> & (S extends any[] ? SelectorItemsDefaultMethods<S, N> : SelectorDefaultMethods<S, N>) & CBM;
 
-declare type Recordable<T = any> = Record<string, T>;
+export declare type Recordable<T = any> = Record<string, T>;
 
 export declare type RelationHookMap<S> = {
     [key in keyof S]: [S[key], React.Dispatch<SetStateAction<S[key]>> | SetMethods<S[key]>];
@@ -225,12 +250,14 @@ export declare type RelationStateMethods<S extends object, RHM extends RelationH
     [key in keyof S]: RHM[key] extends [S[key], infer M] ? M extends React.Dispatch<SetStateAction<S[key]>> ? SetMethods<S[key]> : M extends SetMethods<S[key]> ? M : unknown : unknown;
 };
 
-export declare interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_3.Key> {
+export declare type SecondElement<T extends readonly any[]> = T extends readonly [any, infer Second, ...any[]] ? Second : never;
+
+declare interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_3.Key> {
     itemsState: T[];
     selectKeysState: K[];
 }
 
-declare type SelectorDefaultMethods<S = any, N extends string = 'state'> = {
+export declare type SelectorDefaultMethods<S = any, N extends string = 'state'> = {
     refresh: () => void;
     get: () => S;
     set: (state: S | ((state: S) => S)) => void;
@@ -241,28 +268,28 @@ declare type SelectorDefaultMethods<S = any, N extends string = 'state'> = {
     getState: GetRecoilValue;
 } & PropName<S, N>;
 
-declare type SelectorItemsDefaultMethods<S extends any[] = any[], N extends string = 'state'> = SelectorDefaultMethods<S, N> & {
+export declare type SelectorItemsDefaultMethods<S extends any[] = any[], N extends string = 'state'> = SelectorDefaultMethods<S, N> & {
     add: (newItem: S extends Array<infer P> ? P : unknown) => void;
     remove: (item: S extends Array<infer P> ? P : unknown) => void;
     removes: (items: (S extends Array<infer P> ? P : unknown)[]) => void;
     clear: () => void;
 };
 
-declare interface SetMethods<S> {
+export declare interface SetMethods<S> {
     set: React.Dispatch<React.SetStateAction<S>>;
 }
 
-declare interface SetterFn<Args extends Array<any> = any, R = any> {
+export declare interface SetterFn<Args extends Array<any> = any, R = any> {
     (...args: Args): R;
 }
 
-declare type SetterMethods<S extends Setters> = {
+export declare type SetterMethods<S extends Setters> = {
     [P in keyof S]: S extends Record<P, SetterFn<infer Args, infer R>> ? SetterFn<Args, R> : unknown;
 };
 
-declare type Setters = Recordable<SetterFn>;
+export declare type Setters = Recordable<SetterFn>;
 
-declare interface StateConfig<S extends CallbackState<any, any> | any, N extends string = 'state', G extends Getters<any> = Getters<S extends CallbackState<infer St, any> ? St : S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> {
+export declare interface StateConfig<S extends CallbackState<any, any> | any, N extends string = 'state', G extends Getters<any> = Getters<S extends CallbackState<infer St, any> ? St : S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> {
     name: N;
     useState: S;
     getters?: G & ThisType<PropName<S extends CallbackState<infer St, any> ? St : S, N> & GetterMethods<S extends CallbackState<infer St, any> ? St : S, G>>;
@@ -270,11 +297,21 @@ declare interface StateConfig<S extends CallbackState<any, any> | any, N extends
     actions?: A & ThisType<(S extends Array<infer T> ? ItemsDefaultMethods<T, N> : DefaultMethods<S extends CallbackState<infer St, any> ? St : S, N>) & GetterMethods<S extends CallbackState<infer St, any> ? St : S, G> & SetterMethods<SE> & ActionMethods<A> & CBM>;
 }
 
-declare type StateMethods<S extends CallbackState<any, any> | any = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> = GetterMethods<S, G> & SetterMethods<SE> & ActionMethods<A> & (S extends Array<infer T> ? ItemsDefaultMethods<T, N> : DefaultMethods<S extends CallbackState<infer St, any> ? St : S, N>) & CBM;
+export declare type StateMethods<S extends CallbackState<any, any> | any = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> = GetterMethods<S, G> & SetterMethods<SE> & ActionMethods<A> & (S extends Array<infer T> ? ItemsDefaultMethods<T, N> : DefaultMethods<S extends CallbackState<infer St, any> ? St : S, N>) & CBM;
 
-declare type Tail<T extends readonly any[]> = T extends readonly [any, ...infer Rest] ? Rest : never;
+export declare type Tail<T extends readonly any[]> = T extends readonly [any, ...infer Rest] ? Rest : never;
 
-declare type UnwrapNullable<T> = T extends Nullable<infer O> ? O : T;
+export declare type ThirdElement<T extends readonly any[]> = T extends readonly [any, any, infer Third, ...any[]] ? Third : never;
+
+export declare type TreeList<T, IDN extends string = 'id', PIDN extends string = 'pId', ID extends string | number = number> = {
+    [Key in IDN | PIDN]: ID;
+} & T;
+
+export declare type TreeNode<T> = {
+    children?: TreeNode<T>[];
+} & T;
+
+export declare type UnwrapNullable<T> = T extends Nullable<infer O> ? O : T;
 
 export declare const useActiveItemsState: UseState<{
     itemsState: KeyItem<React_3.Key>[];
@@ -348,11 +385,11 @@ export declare function usePropsState<T>(props: T): UsePropsStateReturnType<T>;
 
 export declare type UsePropsStateReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>];
 
-declare interface UseRecoilValue<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends Recordable<any> = object> {
+export declare interface UseRecoilValue<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends Recordable<any> = object> {
     (initialState?: S): UseRecoilValueReturnType<S, N, G, SE, A, CBM>;
 }
 
-declare type UseRecoilValueReturnType<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends Recordable<any> = object> = [S, RecoilValueAsyncMethods<S, N, G, SE, A, CBM>];
+export declare type UseRecoilValueReturnType<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends Recordable<any> = object> = [S, RecoilValueAsyncMethods<S, N, G, SE, A, CBM>];
 
 export declare function useRelationState<RHM extends RelationHookMap<any>, S extends object = RHM extends RelationHookMap<infer SO> ? SO : object>(hookMap: RHM): UseRelationStateReturnType<S, RHM>;
 
@@ -388,11 +425,11 @@ export declare const useSelectItemsState: UseState<{
     selectKeysState: UseStateReturnType<React_3.Key[], "keysState", Getters<React_3.Key[]>, Setters, Actions, SetMethods<any>>;
 }>>;
 
-declare interface UseState<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> {
+export declare interface UseState<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> {
     (initialState?: S): UseStateReturnType<S, N, G, SE, A, CBM>;
 }
 
-declare type UseStateReturnType<S = any, N extends string = 'state', G extends Getters<any> = any, SE extends Setters = any, A extends Actions = any, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> = [S, StateMethods<S, N, G, SE, A, CBM>];
+export declare type UseStateReturnType<S = any, N extends string = 'state', G extends Getters<any> = any, SE extends Setters = any, A extends Actions = any, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> = [S, StateMethods<S, N, G, SE, A, CBM>];
 
 export declare const useUnmountEffect: (fn: () => void) => void;
 

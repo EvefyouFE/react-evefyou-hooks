@@ -11,20 +11,8 @@ import { is } from "ramda";
 import { useUnmountEffect } from "./useUnmountEffect";
 import { deepCompareObj } from "../../utils/object";
 import { SetMethods } from "../../types/state";
+import { RelationHookMap, RelationStateMethods, UseRelationStateReturnType } from "@/types/hooks";
 
-
-export type RelationHookMap<S> = {
-  [key in keyof S]: [S[key], React.Dispatch<SetStateAction<S[key]>> | SetMethods<S[key]>];
-};
-export type RelationStateMethods<S extends object, RHM extends RelationHookMap<S>> = SetMethods<S> & {
-  [key in keyof S]: RHM[key] extends [S[key], infer M]
-  ? M extends React.Dispatch<SetStateAction<S[key]>>
-  ? SetMethods<S[key]>
-  : M extends SetMethods<S[key]> ? M
-  : unknown
-  : unknown;
-};
-export type UseRelationStateReturnType<S extends object, RHM extends RelationHookMap<S>> = [S, RelationStateMethods<S, RHM>]
 
 export function useRelationState<
   RHM extends RelationHookMap<any>,

@@ -12,6 +12,7 @@ import path from "path";
 import dts from 'vite-plugin-dts';
 import pkg from './package.json';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { head, last, pipe, split } from "ramda";
 
 const pathResolve = (v: string) => path.resolve(__dirname, v)
 
@@ -36,6 +37,21 @@ export default defineConfig({
       formats: ["es", "cjs"],
     },
     rollupOptions: {
+      output: {
+        manualChunks(id) {
+          console.log('id', id)
+          const name = pipe(
+            split('/'),
+            last,
+            split('.ts'),
+            head,
+          )(id) as string
+          return id.includes('src/hooks') ? 'hooks/'.concat(name) : id.includes('src/state') ? 'state/'.concat(name) : null
+        },
+        chunkFileNames() {
+          return '[format]/[name].js'
+        }
+      },
       external: regexOfPackages
     }
   }

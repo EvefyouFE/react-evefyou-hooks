@@ -8,12 +8,9 @@
  */
 import React from "react";
 import { includes } from "ramda";
-import { defineUseState } from "../../../state";
-import { Recordable } from "../../../types/global";
+import { defineUseState } from "@/state/defineUseState";
+import { KeyItem } from "@/types/hooks";
 
-export interface KeyItem<K = React.Key> extends Recordable {
-    key: K
-}
 
 export const defineKeyItemsState = <
     T extends KeyItem<K>,
