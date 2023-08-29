@@ -1,6 +1,6 @@
 import { SetStateAction } from "react";
 import { SetMethods } from "./state";
-import { Recordable } from "./global";
+import { Recordable } from "react-evefyou-common";
 
 export type UseCompInstanceReturnType<P, T extends BaseInstance<P>> = [React.MutableRefObject<T | null>, Partial<T>]
 

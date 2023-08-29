@@ -1,8 +1,12 @@
+import { ExtractNestedKeys } from 'react-evefyou-common';
 import { GetRecoilValue } from 'recoil';
+import { NestedPropType } from 'react-evefyou-common';
+import { PropName } from 'react-evefyou-common';
 import * as React_2 from 'react';
 import { default as React_3 } from 'react';
 import { RecoilState } from 'recoil';
 import { RecoilValueReadOnly } from 'recoil';
+import { Recordable } from 'react-evefyou-common';
 import { SetStateAction } from 'react';
 
 export declare interface ActionFn<Args extends Array<any> = any, R = any> {
@@ -146,27 +150,6 @@ export declare const defineSelectItemsState: <T extends KeyItem<K>, K = T extend
 
 export declare function defineUseState<S extends CallbackState<any, any> | any, N extends string = 'state', G extends Getters<any> = Getters<S extends CallbackState<infer St, any> ? St : S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>>(config: StateConfig<S, N, G, SE, A, CBM>): UseState<S extends CallbackState<infer St, any> ? St : S, N, G, SE, A, CBM>;
 
-export declare type ExtractNestedKeys<T, Excludes = 'children', UWT = UnwrapNullable<T>> = IsAny<UWT> extends true ? never : IsArray<UWT> extends true ? never : UWT extends {
-    [key: string]: string | number | object | undefined;
-} ? never : UWT extends object ? {
-    [K in keyof UWT]: K extends Excludes ? K : K | ExtractNestedKeys<UWT[K], Excludes>;
-}[keyof UWT] : never;
-
-/**
- * 字符串常量联合类型会被 |string 变为string类型，不支持any类型
- */
-export declare type ExtractNestedValues<T, Excludes = 'children', UWT = UnwrapNullable<T>> = IsAny<UWT> extends true ? never : IsArray<UWT> extends true ? never : UWT extends {
-    [key: string]: string | number | object | undefined;
-} ? never : UWT extends object ? {
-    [K in keyof UWT]: K extends Excludes ? never : IsAny<UWT[K]> extends true ? never : UWT[K] | ExtractNestedValues<UWT[K], Excludes>;
-}[keyof UWT] : never;
-
-export declare type FifthElement<T extends readonly any[]> = T extends readonly [any, any, any, any, infer Fifth, ...any[]] ? Fifth : never;
-
-export declare type FirstElement<T extends readonly any[]> = T extends readonly [infer First, ...any[]] ? First : never;
-
-export declare type FourthElement<T extends readonly any[]> = T extends readonly [any, any, any, infer Fourth, ...any[]] ? Fourth : never;
-
 export declare interface GetterFn<S = any, Args extends Array<any> = any, R = any> {
     (...args: [S, ...Args]): R;
 }
@@ -176,20 +159,6 @@ export declare type GetterMethods<S = any, G extends Getters<S> = Getters<S>> = 
 };
 
 export declare type Getters<S = any> = Recordable<GetterFn<S>>;
-
-export declare type IsAny<T> = 0 extends 1 & T ? true : false;
-
-export declare type IsArray<T> = T extends Array<any> ? true : false;
-
-export declare type IsEmptyArray<T extends readonly any[]> = T extends readonly [] ? true : false;
-
-export declare type IsKeyof<P, O> = P extends keyof O ? true : false;
-
-export declare type IsNullable<T> = T extends Nullable<any> ? true : false;
-
-export declare type IsObject<T> = T extends object ? true : false;
-
-export declare type IsStringLiteralUnion<T> = string extends T ? false : true;
 
 export declare type ItemsDefaultMethods<T = any, N extends string = 'state'> = DefaultMethods<T[], N> & ItemsDefaultSetMethods<T>;
 
@@ -203,16 +172,6 @@ export declare type ItemsDefaultSetMethods<T = any> = {
 export declare interface KeyItem<K = React.Key> extends Recordable {
     key: K;
 }
-
-export declare type LastElement<T extends readonly any[]> = T extends readonly [...any[], infer Last] ? Last : never;
-
-export declare type NestedPropType<KS extends readonly any[], O> = IsObject<O> extends true ? FirstElement<KS> extends keyof O ? IsEmptyArray<Tail<KS>> extends true ? O[FirstElement<KS>] : O[FirstElement<KS>] extends Nullable<infer NO> ? NestedPropType<Tail<KS>, NO> : NestedPropType<Tail<KS>, O[FirstElement<KS>]> : never : O;
-
-export declare type Nullable<T> = T | null;
-
-export declare type PropName<V = any, N extends string = string> = {
-    [K in N]: V;
-};
 
 export declare interface RecoilCallback<CBM = object> {
     (): CBM;
@@ -240,8 +199,6 @@ export declare interface RecoilValueConfig<S, N extends string = 'state', G exte
 
 export declare type RecoilValueMethods<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, CBM extends Recordable<any> = object> = GetterMethods<S, G> & SetterMethods<SE> & (S extends any[] ? SelectorItemsDefaultMethods<S, N> : SelectorDefaultMethods<S, N>) & CBM;
 
-export declare type Recordable<T = any> = Record<string, T>;
-
 export declare type RelationHookMap<S> = {
     [key in keyof S]: [S[key], React.Dispatch<SetStateAction<S[key]>> | SetMethods<S[key]>];
 };
@@ -249,8 +206,6 @@ export declare type RelationHookMap<S> = {
 export declare type RelationStateMethods<S extends object, RHM extends RelationHookMap<S>> = SetMethods<S> & {
     [key in keyof S]: RHM[key] extends [S[key], infer M] ? M extends React.Dispatch<SetStateAction<S[key]>> ? SetMethods<S[key]> : M extends SetMethods<S[key]> ? M : unknown : unknown;
 };
-
-export declare type SecondElement<T extends readonly any[]> = T extends readonly [any, infer Second, ...any[]] ? Second : never;
 
 declare interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_3.Key> {
     itemsState: T[];
@@ -298,20 +253,6 @@ export declare interface StateConfig<S extends CallbackState<any, any> | any, N 
 }
 
 export declare type StateMethods<S extends CallbackState<any, any> | any = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> = GetterMethods<S, G> & SetterMethods<SE> & ActionMethods<A> & (S extends Array<infer T> ? ItemsDefaultMethods<T, N> : DefaultMethods<S extends CallbackState<infer St, any> ? St : S, N>) & CBM;
-
-export declare type Tail<T extends readonly any[]> = T extends readonly [any, ...infer Rest] ? Rest : never;
-
-export declare type ThirdElement<T extends readonly any[]> = T extends readonly [any, any, infer Third, ...any[]] ? Third : never;
-
-export declare type TreeList<T, IDN extends string = 'id', PIDN extends string = 'pId', ID extends string | number = number> = {
-    [Key in IDN | PIDN]: ID;
-} & T;
-
-export declare type TreeNode<T> = {
-    children?: TreeNode<T>[];
-} & T;
-
-export declare type UnwrapNullable<T> = T extends Nullable<infer O> ? O : T;
 
 export declare const useActiveItemsState: UseState<{
     itemsState: KeyItem<React_3.Key>[];

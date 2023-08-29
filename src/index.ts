@@ -21,7 +21,6 @@ import { defineRecoilState } from './state/defineRecoilState';
 import { defineRecoilValue } from './state/defineRecoilValue';
 
 export * from './utils/object';
-export * from './types/global'
 export * from './types/state'
 export * from './types/hooks'
 

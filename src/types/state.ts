@@ -8,7 +8,7 @@
  */
 
 import { GetRecoilValue, RecoilState } from "recoil";
-import { ExtractNestedKeys, NestedPropType, PropName, Recordable } from "./global";
+import { ExtractNestedKeys, NestedPropType, PropName, Recordable } from "react-evefyou-common";
 
 export interface GetterFn<S = any, Args extends Array<any> = any, R = any> {
   (...args: [S, ...Args]): R;
