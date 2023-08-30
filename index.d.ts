@@ -5,7 +5,6 @@ import { PropName } from 'react-evefyou-common';
 import * as React_2 from 'react';
 import { default as React_3 } from 'react';
 import { RecoilState } from 'recoil';
-import { RecoilValueReadOnly } from 'recoil';
 import { Recordable } from 'react-evefyou-common';
 import { SetStateAction } from 'react';
 
@@ -39,14 +38,6 @@ export declare interface BaseSelectorStateConfig<S, N extends string = 'state', 
 export declare interface CallbackState<S, CBM extends SetMethods<S>> {
     (initialState?: S): [S, CBM];
 }
-
-export declare function deepCompareObj(prevProps: any, nextProps: any): boolean;
-
-export declare function deepMergeObjectByKeys(keys: readonly any[], value: any, obj: Recordable): {
-    [x: string]: any;
-};
-
-export declare function deepSetObjectByKeys(keys: readonly any[], value: any, obj: Recordable): Recordable;
 
 export declare type DefaultMethods<S = any, N extends string = 'state'> = DefaultSetMethods<S> & {
     get: () => S;
@@ -107,17 +98,6 @@ export declare const defineKeyItemsState: <T extends KeyItem<K>, K = T extends K
 
 export declare const defineKeysState: <K = React_3.Key, N extends string = "keysState">(initialState?: K[], name?: N) => UseState<K[], N, Getters<K[]>, Setters, Actions, SetMethods<any>>;
 
-export declare function defineRecoilSelector<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters>(config: RecoilValueConfig<S, N, G, SE>, atm?: RecoilState<S>): RecoilValueReadOnly<[S, RecoilValueMethods<S, N, G, SE>]>;
-
-export declare function defineRecoilState<S, RS extends CallbackState<RecoilState<S>, any> | RecoilState<S>, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = RS extends CallbackState<any, infer M> ? M : SetMethods<any>>(config: RecoilStateConfig<S, RS, N, G, SE, A, CBM>): UseState<S, N, G, SE, A, CBM>;
-
-export declare function defineRecoilValue<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CB extends RecoilCallback = RecoilCallback>(config: RecoilValueConfig<S, N, G, SE, A, CB>, atm?: RecoilState<S>): UseRecoilValue<S, N, G, SE, A, CB extends RecoilCallback<infer CBM> ? CBM : object>;
-
-export declare function defineRecoilValueAndSelector<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CB extends RecoilCallback = RecoilCallback>(config: RecoilValueConfig<S, N, G, SE, A, CB>, atm?: RecoilState<S>, sel?: RecoilValueReadOnly<[S, RecoilValueMethods<S, N, G, SE>]>): [
-UseRecoilValue<S, N, G, SE, A, CB extends RecoilCallback<infer CBM> ? CBM : object>,
-RecoilValueReadOnly<[S, RecoilValueMethods<S, N, G, SE>]>
-];
-
 export declare const defineSelectItemsState: <T extends KeyItem<K>, K = T extends KeyItem<infer P> ? P : React_3.Key, N extends string = string>(name?: N) => UseState<{
     itemsState: T[];
     selectKeysState: K[];
@@ -147,8 +127,6 @@ export declare const defineSelectItemsState: <T extends KeyItem<K>, K = T extend
     }, Actions, SetMethods<any>>;
     selectKeysState: UseStateReturnType<K[], "keysState", Getters<K[]>, Setters, Actions, SetMethods<any>>;
 }>>;
-
-export declare function defineUseState<S extends CallbackState<any, any> | any, N extends string = 'state', G extends Getters<any> = Getters<S extends CallbackState<infer St, any> ? St : S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>>(config: StateConfig<S, N, G, SE, A, CBM>): UseState<S extends CallbackState<infer St, any> ? St : S, N, G, SE, A, CBM>;
 
 export declare interface GetterFn<S = any, Args extends Array<any> = any, R = any> {
     (...args: [S, ...Args]): R;
@@ -207,7 +185,7 @@ export declare type RelationStateMethods<S extends object, RHM extends RelationH
     [key in keyof S]: RHM[key] extends [S[key], infer M] ? M extends React.Dispatch<SetStateAction<S[key]>> ? SetMethods<S[key]> : M extends SetMethods<S[key]> ? M : unknown : unknown;
 };
 
-declare interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_3.Key> {
+export declare interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_3.Key> {
     itemsState: T[];
     selectKeysState: K[];
 }

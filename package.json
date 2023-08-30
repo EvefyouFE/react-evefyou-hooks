@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-hooks",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
@@ -10,6 +10,16 @@
     ".": {
       "import": "./es/index.js",
       "require": "./cjs/index.js",
+      "types": "./index.d.ts"
+    },
+    "./hooks": {
+      "import": "./es/hooks/index.js",
+      "require": "./cjs/hooks/index.js",
+      "types": "./index.d.ts"
+    },
+    "./state": {
+      "import": "./es/state/index.js",
+      "require": "./cjs/state/index.js",
       "types": "./index.d.ts"
     }
   },
@@ -52,7 +62,7 @@
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
     "recoil": ">=0.7.7",
-    "react-evefyou-common": ">=1.0.6"
+    "react-evefyou-common": ">=1.0.8"
   },
   "devDependencies": {
     "@types/node": "^20.4.9",

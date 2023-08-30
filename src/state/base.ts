@@ -9,7 +9,7 @@
 import { curry, includes, is, omit } from "ramda"
 import { ActionFn, ActionMethods, Actions, CallbackState, DefaultMethods, DefaultSetMethods, GetterFn, GetterMethods, Getters, ItemsDefaultMethods, SelectorDefaultMethods, SetMethods, SetterFn, SetterMethods, Setters } from "../types/state";
 import { SetStateAction } from "react";
-import { deepMergeObjectByKeys, deepSetObjectByKeys } from "../utils/object";
+import { deepMergeObjectByKeys, deepSetObjectByKeys } from "react-evefyou-common";
 import { Recordable } from "react-evefyou-common";
 import { GetCallback, GetRecoilValue, RecoilState, SelectorCallbackInterface } from "recoil";
 
