@@ -1,6 +1,6 @@
 {
   "name": "react-evefyou-hooks",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
@@ -10,6 +10,111 @@
     ".": {
       "import": "./es/index.js",
       "require": "./cjs/index.js",
+      "types": "./index.d.ts"
+    },
+    "./defineRecoilState": {
+      "import": "./es/defineRecoilState/index.js",
+      "require": "./cjs/defineRecoilState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./defineUseState": {
+      "import": "./es/defineUseState/index.js",
+      "require": "./cjs/defineUseState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./defineActiveItemsState": {
+      "import": "./es/defineActiveItemsState/index.js",
+      "require": "./cjs/defineActiveItemsState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./defineItemsState": {
+      "import": "./es/defineItemsState/index.js",
+      "require": "./cjs/defineItemsState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./defineUseCallbackRecoilState": {
+      "import": "./es/defineUseCallbackRecoilState/index.js",
+      "require": "./cjs/defineUseCallbackRecoilState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./defineKeyItemsState": {
+      "import": "./es/defineKeyItemsState/index.js",
+      "require": "./cjs/defineKeyItemsState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./defineKeysState": {
+      "import": "./es/defineKeysState/index.js",
+      "require": "./cjs/defineKeysState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./defineSelectItemsState": {
+      "import": "./es/defineSelectItemsState/index.js",
+      "require": "./cjs/defineSelectItemsState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useDesign": {
+      "import": "./es/useDesign/index.js",
+      "require": "./cjs/useDesign/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useNativeProps": {
+      "import": "./es/useNativeProps/index.js",
+      "require": "./cjs/useNativeProps/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useCompInstance": {
+      "import": "./es/useCompInstance/index.js",
+      "require": "./cjs/useCompInstance/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useMountEffect": {
+      "import": "./es/useMountEffect/index.js",
+      "require": "./cjs/useMountEffect/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useProps": {
+      "import": "./es/useProps/index.js",
+      "require": "./cjs/useProps/index.js",
+      "types": "./index.d.ts"
+    },
+    "./usePropsState": {
+      "import": "./es/usePropsState/index.js",
+      "require": "./cjs/usePropsState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useRelationState": {
+      "import": "./es/useRelationState/index.js",
+      "require": "./cjs/useRelationState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useUnmountEffect": {
+      "import": "./es/useUnmountEffect/index.js",
+      "require": "./cjs/useUnmountEffect/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useActiveItemsState": {
+      "import": "./es/useActiveItemsState/index.js",
+      "require": "./cjs/useActiveItemsState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useItemsState": {
+      "import": "./es/useItemsState/index.js",
+      "require": "./cjs/useItemsState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useKeyItemsState": {
+      "import": "./es/useKeyItemsState/index.js",
+      "require": "./cjs/useKeyItemsState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useKeysState": {
+      "import": "./es/useKeysState/index.js",
+      "require": "./cjs/useKeysState/index.js",
+      "types": "./index.d.ts"
+    },
+    "./useSelectItemsState": {
+      "import": "./es/useSelectItemsState/index.js",
+      "require": "./cjs/useSelectItemsState/index.js",
       "types": "./index.d.ts"
     }
   },

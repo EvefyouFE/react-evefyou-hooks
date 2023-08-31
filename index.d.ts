@@ -227,7 +227,7 @@ export declare type RelationStateMethods<S extends object, RHM extends RelationH
     [key in keyof S]: RHM[key] extends [S[key], infer M] ? M extends React.Dispatch<SetStateAction<S[key]>> ? SetMethods<S[key]> : M extends SetMethods<S[key]> ? M : unknown : unknown;
 };
 
-export declare interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_2.Key> {
+declare interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_2.Key> {
     itemsState: T[];
     selectKeysState: K[];
 }
