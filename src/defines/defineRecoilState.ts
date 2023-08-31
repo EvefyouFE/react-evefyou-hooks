@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { Actions, CallbackState, Getters, RecoilStateConfig, SetMethods, Setters, StateMethods, UseState, UseStateReturnType } from "../types/state"
-import { actionMethods, getDefaultMethods, getDefaultSetMethods, getterMethods, setterMethods } from "./base"
+import { actionMethods, getDefaultMethods, getDefaultSetMethods, getterMethods, setterMethods } from "./baseDefine"
 import { RecoilState } from "recoil"
 import { defineUseCallbackRecoilState } from "./defineUseCallbackRecoilState"
 

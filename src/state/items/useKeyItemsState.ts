@@ -7,6 +7,6 @@
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
  */
 import { KeyItem } from "@/types/hooks";
-import { defineKeyItemsState } from "@/state";
+import { defineKeyItemsState } from "@/defines/items/defineKeyItemsState";
 
 export const useKeyItemsState = defineKeyItemsState([] as KeyItem[])

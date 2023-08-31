@@ -1,6 +1,6 @@
 import { RecoilState, RecoilValueReadOnly, atom, selector } from "recoil";
 import { Getters, RecoilValueConfig, RecoilValueMethods, Setters } from "../types/state";
-import { getSelectorDefaultMethods, getterMethods, setterMethods } from "./base";
+import { getSelectorDefaultMethods, getterMethods, setterMethods } from "./baseDefine";
 
 export function defineRecoilSelector<
   S,

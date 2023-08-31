@@ -1,5 +1,5 @@
 import { RecoilState } from "recoil";
-import { Actions, Getters, RecoilCallback, RecoilValueConfig, Setters, UseRecoilValue } from "..";
+import { Actions, Getters, RecoilCallback, RecoilValueConfig, Setters, UseRecoilValue } from "@/types";
 import { defineRecoilValueAndSelector } from "./defineRecoilValueAndSelector";
 
 export function defineRecoilValue<

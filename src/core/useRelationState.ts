@@ -10,7 +10,7 @@ import { SetStateAction, useCallback, useRef } from "react";
 import { is } from "ramda";
 import { useUnmountEffect } from "./useUnmountEffect";
 import { deepCompareObj } from "react-evefyou-common";
-import { SetMethods } from "../../types/state";
+import { SetMethods } from "@/types/state";
 import { RelationHookMap, RelationStateMethods, UseRelationStateReturnType } from "@/types/hooks";
 
 

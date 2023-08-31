@@ -12,7 +12,7 @@ import path from "path";
 import dts from 'vite-plugin-dts';
 import pkg from './package.json';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { head, last, pipe, split } from "ramda";
+import { endsWith, equals, filter, has, head, identity, includes, isNil, isNotNil, last, not, pipe, reject, remove, split, when } from "ramda";
 import fs from 'fs';
 
 const pathResolve = (v: string) => path.resolve(__dirname, v)
@@ -50,33 +50,34 @@ export default defineConfig({
     outDir: '.',
     lib: {
       entry: {
-        "index": pathResolve('src/index.ts')
-      },
-      fileName(format) {
-        return `${format}/index.js`
+        "index": pathResolve('src/index.ts'),
       },
       name: "react-evefyou-hooks",
       formats: ["es", "cjs"],
     },
     rollupOptions: {
-      input: {
-        'index': './src/index.ts',
-        'hooks': './src/hooks/index.ts',
-        'state': './src/state/index.ts',
-      },
       output: {
         minifyInternalExports: false,
         manualChunks(id) {
-          console.log('id', id)
-          const name = pipe(
-            split('/'),
-            last,
-            split('.ts'),
-            head,
-          )(id) as string
-          return id.includes('src/hooks') ? 'hooks/'.concat(name)
-            : id.includes('src/state')
-              ? 'state/'.concat(name) : null
+          const debugId = id.split('/').filter(i => !i.includes('@')).join('/')
+          console.log('debugId', debugId)
+
+          if (!id.includes('src/types')) {
+            const name = pipe(
+              split('src/'),
+              last,
+              split('/'),
+              reject(equals('index.ts')),
+              last,
+              when(isNotNil, pipe(
+                split('.ts'),
+                head
+              )),
+            )(id) as string
+
+            console.log('name', name, debugId)
+            return name
+          }
         },
         chunkFileNames: '[format]/[name]/index.js',
         entryFileNames: (chunkInfo) => chunkInfo.name.includes('index')

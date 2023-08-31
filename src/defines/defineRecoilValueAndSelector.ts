@@ -1,5 +1,5 @@
 import { Actions, Getters, RecoilCallback, RecoilValueAsyncMethods, RecoilValueConfig, RecoilValueMethods, Setters, UseRecoilValue, UseRecoilValueReturnType } from "../types/state"
-import { actionMethods, } from "./base"
+import { actionMethods, } from "./baseDefine"
 import { RecoilState, RecoilValueReadOnly, atom, useRecoilValue } from "recoil"
 import { defineRecoilSelector } from "./defineRecoilSelector";
 

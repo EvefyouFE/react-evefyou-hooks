@@ -8,7 +8,7 @@
  */
 import React from "react";
 import { includes } from "ramda";
-import { defineUseState } from "@/state/defineUseState";
+import { defineUseState } from "@/defines/defineUseState";
 import { KeyItem } from "@/types/hooks";
 
 

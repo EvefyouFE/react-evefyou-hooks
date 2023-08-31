@@ -9,8 +9,8 @@
 
 import React, { useState } from "react";
 import { defineKeyItemsState } from "./defineKeyItemsState";
-import useRelationState from "@/hooks/core/useRelationState";
-import { defineUseState } from "@/state/defineUseState";
+import useRelationState from "@/core/useRelationState";
+import { defineUseState } from "@/defines/defineUseState";
 import { ActiveItem, KeyItem } from "@/types/hooks";
 
 export const defineActiveItemsState = <

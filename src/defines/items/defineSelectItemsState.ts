@@ -11,8 +11,8 @@ import { drop, includes } from "ramda";
 import React from "react";
 import { defineKeyItemsState } from "./defineKeyItemsState";
 import { defineKeysState } from "./defineKeysState";
-import { defineUseState } from "@/state/defineUseState";
-import useRelationState from "@/hooks/core/useRelationState";
+import { defineUseState } from "@/defines/defineUseState";
+import useRelationState from "@/core/useRelationState";
 import { KeyItem } from "@/types/hooks";
 
 export interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React.Key> {
