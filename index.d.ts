@@ -1,10 +1,12 @@
+import { Dispatch } from 'react';
 import { ExtractNestedKeys } from 'react-evefyou-common';
 import { GetCallback } from 'recoil';
 import { GetRecoilValue } from 'recoil';
+import { Key } from 'react';
 import { NestedPropType } from 'react-evefyou-common';
 import { PropName } from 'react-evefyou-common';
-import * as React_2 from 'react';
-import { default as React_3 } from 'react';
+import { default as React_2 } from 'react';
+import * as React_3 from 'react';
 import { RecoilState } from 'recoil';
 import { RecoilValueReadOnly } from 'recoil';
 import { Recordable } from 'react-evefyou-common';
@@ -55,7 +57,7 @@ export declare type DefaultSetMethods<S = any> = SetMethods<S> & {
     deepMerge: <KS extends readonly ExtractNestedKeys<S>[]>(keys: KS, any: Partial<NestedPropType<KS, S>>) => void;
 };
 
-export declare const defineActiveItemsState: <T extends KeyItem<K>, K = T extends KeyItem<infer P> ? P : React_3.Key, N extends string = string>(name?: N) => UseState<{
+export declare const defineActiveItemsState: <T extends KeyItem<K>, K = T extends KeyItem<infer P> ? P : React_2.Key, N extends string = string>(name?: N) => UseState<{
     itemsState: T[];
     activeKeyState: K | undefined;
 }, N, {
@@ -85,12 +87,12 @@ export declare const defineActiveItemsState: <T extends KeyItem<K>, K = T extend
         removeByKey(k: K): void;
         removeByKeys(keys: K[]): void;
     }, Actions, SetMethods<any>>;
-    activeKeyState: [K | undefined, React_3.Dispatch<React_3.SetStateAction<K | undefined>>];
+    activeKeyState: [K | undefined, React_2.Dispatch<React_2.SetStateAction<K | undefined>>];
 }>>;
 
 export declare const defineItemsState: <T = any, N extends string = "itemsState">(initialState?: T[], name?: N) => UseState<T[], N, Getters<T[]>, Setters, Actions, SetMethods<any>>;
 
-export declare const defineKeyItemsState: <T extends KeyItem<K>, K = T extends KeyItem<infer P> ? P : React_3.Key, N extends string = "state">(initialState?: T[], name?: N) => UseState<T[], N, {
+export declare const defineKeyItemsState: <T extends KeyItem<K>, K = T extends KeyItem<infer P> ? P : React_2.Key, N extends string = "state">(initialState?: T[], name?: N) => UseState<T[], N, {
     getByKey(state: T[], k: K): T;
     getByKeys(state: T[], k: K): T[];
 }, {
@@ -101,7 +103,7 @@ export declare const defineKeyItemsState: <T extends KeyItem<K>, K = T extends K
     removeByKeys(keys: K[]): void;
 }, Actions, SetMethods<any>>;
 
-export declare const defineKeysState: <K = React_3.Key, N extends string = "keysState">(initialState?: K[], name?: N) => UseState<K[], N, Getters<K[]>, Setters, Actions, SetMethods<any>>;
+export declare const defineKeysState: <K = React_2.Key, N extends string = "keysState">(initialState?: K[], name?: N) => UseState<K[], N, Getters<K[]>, Setters, Actions, SetMethods<any>>;
 
 export declare function defineRecoilSelector<S, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters>(config: RecoilValueConfig<S, N, G, SE>, atm?: RecoilState<S>): RecoilValueReadOnly<[S, RecoilValueMethods<S, N, G, SE>]>;
 
@@ -114,7 +116,7 @@ UseRecoilValue<S, N, G, SE, A, CB extends RecoilCallback<infer CBM> ? CBM : obje
 RecoilValueReadOnly<[S, RecoilValueMethods<S, N, G, SE>]>
 ];
 
-export declare const defineSelectItemsState: <T extends KeyItem<K>, K = T extends KeyItem<infer P> ? P : React_3.Key, N extends string = string>(name?: N) => UseState<{
+export declare const defineSelectItemsState: <T extends KeyItem<K>, K = T extends KeyItem<infer P> ? P : React_2.Key, N extends string = string>(name?: N) => UseState<{
     itemsState: T[];
     selectKeysState: K[];
 }, N, {
@@ -225,7 +227,7 @@ export declare type RelationStateMethods<S extends object, RHM extends RelationH
     [key in keyof S]: RHM[key] extends [S[key], infer M] ? M extends React.Dispatch<SetStateAction<S[key]>> ? SetMethods<S[key]> : M extends SetMethods<S[key]> ? M : unknown : unknown;
 };
 
-export declare interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_3.Key> {
+export declare interface SelectItem<T extends KeyItem<K> = any, K = T extends KeyItem<infer Key> ? Key : React_2.Key> {
     itemsState: T[];
     selectKeysState: K[];
 }
@@ -274,6 +276,39 @@ export declare interface StateConfig<S extends CallbackState<any, any> | any, N 
 
 export declare type StateMethods<S extends CallbackState<any, any> | any = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> = GetterMethods<S, G> & SetterMethods<SE> & ActionMethods<A> & (S extends Array<infer T> ? ItemsDefaultMethods<T, N> : DefaultMethods<S extends CallbackState<infer St, any> ? St : S, N>) & CBM;
 
+export declare const useActiveItemsState: UseState<{
+    itemsState: KeyItem<Key>[];
+    activeKeyState: Key | undefined;
+}, string, {
+    getActiveItem(state: ActiveItem<KeyItem<Key>, Key>): KeyItem<Key>[];
+    getActiveKey(state: ActiveItem<KeyItem<Key>, Key>): Key | undefined;
+}, {
+    active(key: Key): void;
+    addAndActive(item: KeyItem<Key>): void;
+    addOrUpdateAndActive(item: KeyItem<Key>): void;
+    clear(): void;
+}, {
+    removeByKey(key: Key): void;
+    removeLeft(key: Key): void;
+    removeRight(key: Key): void;
+    removeOther(key: Key): void;
+}, RelationStateMethods<{
+    itemsState: KeyItem<Key>[];
+    activeKeyState: Key | undefined;
+}, {
+    itemsState: UseStateReturnType<KeyItem<Key>[], "state", {
+        getByKey(state: KeyItem<Key>[], k: Key): KeyItem<Key>;
+        getByKeys(state: KeyItem<Key>[], k: Key): KeyItem<Key>[];
+    }, {
+        addByKey(item: KeyItem<Key>): void;
+        updateByKey(newItem: KeyItem<Key>): void;
+        addOrUpdateByKey(item: KeyItem<Key>): void;
+        removeByKey(k: Key): void;
+        removeByKeys(keys: Key[]): void;
+    }, Actions, SetMethods<any>>;
+    activeKeyState: [Key | undefined, Dispatch<SetStateAction<Key | undefined>>];
+}>>;
+
 export declare function useCompInstance<T extends BaseInstance<P>, P = T extends BaseInstance<infer Props> ? Props : unknown>(props?: P, name?: string): UseCompInstanceReturnType<P, T>;
 
 export declare type UseCompInstanceReturnType<P, T extends BaseInstance<P>> = [React.MutableRefObject<T | null>, Partial<T>];
@@ -283,7 +318,22 @@ export declare function useDesign(scope: string, prefixCls?: string): {
     prefixVar: string;
 };
 
-export declare const useMountEffect: (fn: React_2.EffectCallback) => void;
+export declare const useItemsState: UseState<any[], "itemsState", Getters<any[]>, Setters, Actions, SetMethods<any>>;
+
+export declare const useKeyItemsState: UseState<KeyItem<Key>[], "state", {
+    getByKey(state: KeyItem<Key>[], k: Key): KeyItem<Key>;
+    getByKeys(state: KeyItem<Key>[], k: Key): KeyItem<Key>[];
+}, {
+    addByKey(item: KeyItem<Key>): void;
+    updateByKey(newItem: KeyItem<Key>): void;
+    addOrUpdateByKey(item: KeyItem<Key>): void;
+    removeByKey(k: Key): void;
+    removeByKeys(keys: Key[]): void;
+}, Actions, SetMethods<any>>;
+
+export declare const useKeysState: UseState<Key[], "keysState", Getters<Key[]>, Setters, Actions, SetMethods<any>>;
+
+export declare const useMountEffect: (fn: React_3.EffectCallback) => void;
 
 export declare function useNativeProps<T extends Recordable>(props: T, options?: UseNativePropsOptions): T;
 
@@ -320,6 +370,36 @@ export declare type UseRecoilValueReturnType<S = any, N extends string = 'state'
 export declare function useRelationState<RHM extends RelationHookMap<any>, S extends object = RHM extends RelationHookMap<infer SO> ? SO : object>(hookMap: RHM): UseRelationStateReturnType<S, RHM>;
 
 export declare type UseRelationStateReturnType<S extends object, RHM extends RelationHookMap<S>> = [S, RelationStateMethods<S, RHM>];
+
+export declare const useSelectItemsState: UseState<{
+    itemsState: KeyItem<Key>[];
+    selectKeysState: Key[];
+}, string, {
+    getSelectedItems(state: SelectItem<KeyItem<Key>, Key>): KeyItem<Key>[];
+}, {
+    select(keys: Key[]): void;
+    reSelect(keys: Key[]): void;
+    addAndSelect(item: KeyItem<Key>): void;
+    addOrUpdateAndSelect(item: KeyItem<Key>): void;
+    clear(): void;
+}, {
+    removeByKey(key: Key): void;
+}, RelationStateMethods<{
+    itemsState: KeyItem<Key>[];
+    selectKeysState: Key[];
+}, {
+    itemsState: UseStateReturnType<KeyItem<Key>[], "state", {
+        getByKey(state: KeyItem<Key>[], k: Key): KeyItem<Key>;
+        getByKeys(state: KeyItem<Key>[], k: Key): KeyItem<Key>[];
+    }, {
+        addByKey(item: KeyItem<Key>): void;
+        updateByKey(newItem: KeyItem<Key>): void;
+        addOrUpdateByKey(item: KeyItem<Key>): void;
+        removeByKey(k: Key): void;
+        removeByKeys(keys: Key[]): void;
+    }, Actions, SetMethods<any>>;
+    selectKeysState: UseStateReturnType<Key[], "keysState", Getters<Key[]>, Setters, Actions, SetMethods<any>>;
+}>>;
 
 export declare interface UseState<S = any, N extends string = 'state', G extends Getters<any> = Getters<S>, SE extends Setters = Setters, A extends Actions = Actions, CBM extends SetMethods<any> = S extends CallbackState<any, infer M> ? M : SetMethods<any>> {
     (initialState?: S): UseStateReturnType<S, N, G, SE, A, CBM>;
