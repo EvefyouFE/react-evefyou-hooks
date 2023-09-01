@@ -12,7 +12,7 @@ import path from "path";
 import dts from 'vite-plugin-dts';
 import pkg from './package.json';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { endsWith, equals, filter, has, head, identity, includes, isNil, isNotNil, last, not, pipe, reject, remove, split, when } from "ramda";
+import { always, head, includes, isNotNil, last, not, pipe, split, when } from "ramda";
 import fs from 'fs';
 
 const pathResolve = (v: string) => path.resolve(__dirname, v)
@@ -21,26 +21,42 @@ const externalPackages = [...Object.keys(pkg.peerDependencies)]
 const regexOfPackages = externalPackages
   .map(packageName => new RegExp(`^${packageName}(\\/.*)?`));
 
+const dtsFiles = [
+  pathResolve('es/index.d.ts'),
+  pathResolve('cjs/index.d.ts'),
+]
+const tsupFiles = [
+  pathResolve('dist/index.d.ts'),
+  pathResolve('dist/index.d.cts'),
+]
+function moveFile(oldPath, newPath) {
+  fs.rename(oldPath, newPath, (err) => {
+    if (err) {
+      console.error('移动文件失败:', err);
+    } else {
+      console.log('文件已成功移动到新位置');
+    }
+  });
+}
+
 export default defineConfig({
   plugins: [
     react(),
     dts({
+      outDir: ["es", "cjs"],
       rollupTypes: true,
-      afterBuild: () => {
-        const directoryPath = '.';
-        const regexToDelete = /\w+\.d\.ts$/;
-        fs.readdirSync(directoryPath).forEach((file) => {
-          const filePath = path.join(directoryPath, file);
-          if (regexToDelete.test(file) && !file.includes('index.d.ts')) {
-            try {
-              fs.unlinkSync(filePath);
-              console.log(`Deleted file: ${filePath}`);
-            } catch (err) {
-              console.error(`Error deleting file: ${err}`);
-            }
-          }
-        });
-      }
+      afterBuild() {
+        tsupFiles.forEach((f, idx) => {
+          fs.unlinkSync(dtsFiles[idx])
+          moveFile(f, dtsFiles[idx])
+        })
+        const dir = pathResolve('dist')
+        console.log('rm dir', dir)
+        fs.rm(dir, { recursive: true }, (err) => {
+          if (err) throw err;
+          console.log('目录已删除');
+        })
+      },
     }),
     tsconfigPaths()
   ],
@@ -58,31 +74,24 @@ export default defineConfig({
     rollupOptions: {
       output: {
         minifyInternalExports: false,
-        manualChunks(id) {
-          const debugId = id.split('/').filter(i => !i.includes('@')).join('/')
-          console.log('debugId', debugId)
-
-          if (!id.includes('src/types')) {
-            const name = pipe(
-              split('src/'),
-              last,
-              split('/'),
-              reject(equals('index.ts')),
-              last,
-              when(isNotNil, pipe(
-                split('.ts'),
-                head
-              )),
-            )(id) as string
-
-            console.log('name', name, debugId)
-            return name
-          }
+        manualChunks: (id) => {
+          const name = pipe(
+            split('src/'),
+            last,
+            when(includes('types'), always(undefined)),
+            when(isNotNil, pipe(
+              split('.ts'),
+              head,
+              when(pipe(
+                includes('index'),
+                not
+              ), s => s.concat('/index'))
+            ))
+          )(id) as string
+          return name
         },
-        chunkFileNames: '[format]/[name]/index.js',
-        entryFileNames: (chunkInfo) => chunkInfo.name.includes('index')
-          ? '[format]/index.js'
-          : '[format]/[name]/index.js'
+        chunkFileNames: '[format]/[name].js',
+        entryFileNames: '[format]/[name].js'
       },
       external: regexOfPackages
     }
