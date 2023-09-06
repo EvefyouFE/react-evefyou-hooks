@@ -9,12 +9,10 @@ export interface BaseInstance<P> {
   initDebug?: (props: P, name?: string) => void;
 }
 
-export interface UsePropsSetMethods<T> {
-  init: (props: T) => void;
-  initDebug: (props: T, name?: string) => void;
-  setProps: (props: T) => void;
-  setPropsState: React.Dispatch<React.SetStateAction<T>>;
-  resetProps: (props: T) => void;
+export interface UsePropsSetMethods<P> extends BaseInstance<P> {
+  setProps: (props: P) => void;
+  setPropsState: React.Dispatch<React.SetStateAction<P>>;
+  resetProps: (props: P) => void;
 }
 
 export type UsePropsMethods<T> = UsePropsSetMethods<T>;
