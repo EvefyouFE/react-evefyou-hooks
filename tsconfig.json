@@ -27,12 +27,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "src/*"
+        "hooks/*"
       ]
     }
   },
   "include": [
-    "src"
+    "hooks"
   ],
   "references": [
     {

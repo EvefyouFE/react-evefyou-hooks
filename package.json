@@ -1,18 +1,92 @@
 {
   "name": "react-evefyou-hooks",
-  "version": "1.0.23",
+  "version": "1.0.25",
   "description": "",
   "type": "module",
   "main": "./cjs/index.js",
   "module": "./es/index.js",
   "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./cjs/index.js",
+      "import": "./es/index.js"
+    },
+    "./defineRecoilSelector": {
+      "require": "./cjs/defineRecoilSelector/index.js",
+      "import": "./es/defineRecoilSelector/index.js"
+    },
+    "./defineRecoilState": {
+      "require": "./cjs/defineRecoilState/index.js",
+      "import": "./es/defineRecoilState/index.js"
+    },
+    "./defineRecoilValue": {
+      "require": "./cjs/defineRecoilValue/index.js",
+      "import": "./es/defineRecoilValue/index.js"
+    },
+    "./defineUseState": {
+      "require": "./cjs/defineUseState/index.js",
+      "import": "./es/defineUseState/index.js"
+    },
+    "./useActiveItemsState": {
+      "require": "./cjs/useActiveItemsState/index.js",
+      "import": "./es/useActiveItemsState/index.js"
+    },
+    "./useCompInstance": {
+      "require": "./cjs/useCompInstance/index.js",
+      "import": "./es/useCompInstance/index.js"
+    },
+    "./useDesign": {
+      "require": "./cjs/useDesign/index.js",
+      "import": "./es/useDesign/index.js"
+    },
+    "./useItemsState": {
+      "require": "./cjs/useItemsState/index.js",
+      "import": "./es/useItemsState/index.js"
+    },
+    "./useKeyItemsState": {
+      "require": "./cjs/useKeyItemsState/index.js",
+      "import": "./es/useKeyItemsState/index.js"
+    },
+    "./useKeysState": {
+      "require": "./cjs/useKeysState/index.js",
+      "import": "./es/useKeysState/index.js"
+    },
+    "./useMountEffect": {
+      "require": "./cjs/useMountEffect/index.js",
+      "import": "./es/useMountEffect/index.js"
+    },
+    "./useNativeProps": {
+      "require": "./cjs/useNativeProps/index.js",
+      "import": "./es/useNativeProps/index.js"
+    },
+    "./useProps": {
+      "require": "./cjs/useProps/index.js",
+      "import": "./es/useProps/index.js"
+    },
+    "./usePropsState": {
+      "require": "./cjs/usePropsState/index.js",
+      "import": "./es/usePropsState/index.js"
+    },
+    "./useRelationState": {
+      "require": "./cjs/useRelationState/index.js",
+      "import": "./es/useRelationState/index.js"
+    },
+    "./useSelectItemsState": {
+      "require": "./cjs/useSelectItemsState/index.js",
+      "import": "./es/useSelectItemsState/index.js"
+    },
+    "./useUnmountEffect": {
+      "require": "./cjs/useUnmountEffect/index.js",
+      "import": "./es/useUnmountEffect/index.js"
+    }
+  },
   "files": [
     "es",
     "cjs"
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsup src/index.ts --dts --format=esm,cjs && vite build",
+    "build": "tsc && vite build",
     "build:tsc": "tsc",
     "clean": "rimraf node_modules",
     "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
@@ -35,7 +109,7 @@
   "author": "EvefyouFE",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/EvefyouFE/react-evefyou-hooks/issues"
+    "url": "https://github.com/EvefyouFE/react-evefyou-issues"
   },
   "homepage": "https://github.com/EvefyouFE/react-evefyou-hooks#readme",
   "peerDependencies": {
@@ -43,7 +117,7 @@
     "ramda": ">=0.29.0",
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
-    "react-evefyou-common": ">=1.0.12",
+    "react-evefyou-common": ">=1.0.13",
     "recoil": ">=0.7.7"
   },
   "devDependencies": {

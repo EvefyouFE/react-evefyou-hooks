@@ -1,34 +1,41 @@
 /*
  * @Author: EvefyouFE
  * @Date: 2023-08-10 13:42:48
- * @FilePath: \react-evefyou-hooks\vite.config.ts
+ * @FilePath: \js-evefyou-utils\vite.config.ts
  * @Description: 
  * Everyone is coming to the world i live in, as i am going to the world lives for you. 人人皆往我世界，我为世界中人人。
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
  */
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 import path from "path";
 import dts from 'vite-plugin-dts';
-import pkg from './package.json';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { always, head, includes, isNotNil, last, not, pipe, split, when } from "ramda";
+import pkg from './package.json';
+import { anyPass, equals, filter, last, not, pipe, split } from "ramda";
 import fs from 'fs';
+
+const libName = 'hooks'
+const libFullName = `react-evefyou-${libName}`
 
 const pathResolve = (v: string) => path.resolve(__dirname, v)
 
+
+// const depPackages = [...Object.keys(pkg.dependencies)]
 const externalPackages = [...Object.keys(pkg.peerDependencies)]
 const regexOfPackages = externalPackages
   .map(packageName => new RegExp(`^${packageName}(\\/.*)?`));
 
-const dtsFiles = [
-  pathResolve('es/index.d.ts'),
-  pathResolve('cjs/index.d.ts'),
-]
-const tsupFiles = [
-  pathResolve('dist/index.d.ts'),
-  pathResolve('dist/index.d.cts'),
-]
+
+const entries = Object.keys(pkg.exports)
+  .reduce((acc, cur) => {
+    const isIndex = cur === '.'
+    cur = cur.split('./')[1]
+    const key = isIndex ? 'index' : cur
+    const val = isIndex ? pathResolve(`${libName}/index.ts`) : pathResolve(`${libName}/${cur}/index.ts`)
+    acc[key] = val
+    return acc
+  }, {})
+
 function moveFile(oldPath, newPath) {
   fs.rename(oldPath, newPath, (err) => {
     if (err) {
@@ -38,60 +45,91 @@ function moveFile(oldPath, newPath) {
     }
   });
 }
+const components = filter(
+  pipe(
+    anyPass(
+      [
+        equals('.'),
+      ]
+    ),
+    not
+  )
+)(Object.keys(pkg.exports))
+
+const formats = ['es', 'cjs']
+function moveCjsFiles() {
+  const f = 'cjs'
+  components.forEach(comp => {
+    fs.rm(pathResolve(`./${f}/${comp}.d.ts`), err => {
+      console.error('删除文件失败:', err);
+    })
+    fs.rm(pathResolve(`./cjs/${comp}/index.d.ts`), err => {
+      console.error('删除文件失败:', err);
+    })
+    fs.copyFile(pathResolve(`./es/${comp}/index.d.ts`), pathResolve(`./cjs/${comp}/index.d.ts`), err => {
+      console.error('拷贝文件失败:', err, pathResolve(`./es/${comp}/index.d.ts`), pathResolve(`./cjs/${comp}/index.d.ts`));
+    })
+  })
+}
+function moveEsFiles() {
+  const f = 'es'
+  components.forEach(comp => {
+    const oldComp = pipe(split('/'), last)(comp)
+    const oldPath = pathResolve(`./${f}/${oldComp}.d.ts`)
+    const newPath = pathResolve(`./${f}/${comp}/index.d.ts`)
+    // console.log('move', oldPath, newPath)
+    moveFile(oldPath, newPath)
+
+    fs.rm(pathResolve(`./${f}/${comp}.d.ts`), err => {
+      console.error('删除文件失败:', err);
+    })
+  })
+}
+function deleteFiles(files: string[]) {
+  files.forEach(f => {
+    fs.rm(f, { recursive: true }, (err) => {
+      if (err) throw err;
+      console.log(`${f}已删除`);
+    })
+  })
+}
 
 export default defineConfig({
   plugins: [
-    react(),
+    tsconfigPaths(),
     dts({
-      outDir: ["es", "cjs"],
+      outDir: formats,
       rollupTypes: true,
       afterBuild() {
-        tsupFiles.forEach((f, idx) => {
-          fs.unlinkSync(dtsFiles[idx])
-          moveFile(f, dtsFiles[idx])
-        })
-        const dir = pathResolve('dist')
-        console.log('rm dir', dir)
-        fs.rm(dir, { recursive: true }, (err) => {
-          if (err) throw err;
-          console.log('目录已删除');
-        })
+        console.log('start...', new Date().getTime())
+        setTimeout(() => {
+          moveEsFiles()
+          moveCjsFiles()
+          // const idxFiles = formats.map(f => pathResolve(`${f}/index.d.ts`))
+          // deleteFiles(idxFiles)
+          // moveFile(pathResolve(`dist/index.d.ts`), idxFiles[0])
+          // moveFile(pathResolve(`dist/index.d.cts`), idxFiles[1])
+          // deleteFiles([pathResolve('dist')])
+        }, 5000);
       },
-    }),
-    tsconfigPaths()
+    })
   ],
   build: {
     minify: true,
     reportCompressedSize: true,
+    cssCodeSplit: true,
     outDir: '.',
     lib: {
-      entry: {
-        "index": pathResolve('src/index.ts'),
-      },
-      name: "react-evefyou-hooks",
-      formats: ["es", "cjs"],
+      entry: entries,
+      name: libFullName,
+      formats: formats as any,
     },
     rollupOptions: {
       output: {
         minifyInternalExports: false,
-        manualChunks: (id) => {
-          const name = pipe(
-            split('src/'),
-            last,
-            when(includes('types'), always(undefined)),
-            when(isNotNil, pipe(
-              split('.ts'),
-              head,
-              when(pipe(
-                includes('index'),
-                not
-              ), s => s.concat('/index'))
-            ))
-          )(id) as string
-          return name
-        },
         chunkFileNames: '[format]/[name].js',
-        entryFileNames: '[format]/[name].js'
+        entryFileNames: (chunkInfo) => chunkInfo.name === 'index'
+          ? '[format]/[name].js' : '[format]/[name]/index.js'
       },
       external: regexOfPackages
     }
