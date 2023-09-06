@@ -7,9 +7,9 @@
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
  */
 import { SetStateAction, useCallback, useRef } from "react";
+import { deepCompareObj } from "react-evefyou-common/utils/object/deepCompareObj";
 import { is } from "ramda";
 import { useUnmountEffect } from "../useUnmountEffect";
-import { deepCompareObj } from "react-evefyou-common";
 import { SetMethods } from "@/types/state";
 import { RelationHookMap, RelationStateMethods, UseRelationStateReturnType } from "@/types/hooks";
 

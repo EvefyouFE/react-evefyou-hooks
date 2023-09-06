@@ -18,8 +18,8 @@ dependencies:
     specifier: '>=18.2.0'
     version: 18.2.0(react@18.2.0)
   react-evefyou-common:
-    specifier: '>=1.0.13'
-    version: 1.0.13(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0)
+    specifier: '>=1.0.17'
+    version: 1.0.17(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0)
   recoil:
     specifier: '>=0.7.7'
     version: 0.7.7(react-dom@18.2.0)(react@18.2.0)
@@ -1934,6 +1934,18 @@ packages:
     resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
     dev: false
 
+  /js-evefyou-utils@1.0.1(moment@2.29.4)(ramda@0.29.0)(uuid@9.0.0):
+    resolution: {integrity: sha512-GZs9Com6GTkW3KC5Hz9E6QwaWCoyKwufA2isSxBQsIE4eQiaxdvwCIeTP6PXi4/6VBOAfpj3n/YdP3LgmXTRXw==}
+    peerDependencies:
+      moment: '>=2.29.4'
+      ramda: '>=0.29.0'
+      uuid: '>=9.0.0'
+    dependencies:
+      moment: 2.29.4
+      ramda: 0.29.0
+      uuid: 9.0.0
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     requiresBuild: true
@@ -2288,8 +2300,8 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-evefyou-common@1.0.13(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0):
-    resolution: {integrity: sha512-yl58jphMsB+ZPc+1A1Hncv2qVeUODPsUe7hnoV+GCNhuDcTmzbTuBW9qk9AmoPCGagWlOzQFayMy0r9hP+B/Rg==}
+  /react-evefyou-common@1.0.17(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0):
+    resolution: {integrity: sha512-hdJne33UhhXDl7kzykd5WNa4+jib91MeE22Ziv9ku8nMvq38ieeKR9o5P93Ofe2w5LoBR93At9nXSvr5lY2u5Q==}
     peerDependencies:
       moment: '>=2.29.4'
       ramda: '>=0.29.0'
@@ -2298,6 +2310,7 @@ packages:
       react-intl: '>=6.4.4'
       uuid: '>=9.0.0'
     dependencies:
+      js-evefyou-utils: 1.0.1(moment@2.29.4)(ramda@0.29.0)(uuid@9.0.0)
       moment: 2.29.4
       ramda: 0.29.0
       react: 18.2.0
