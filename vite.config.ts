@@ -127,7 +127,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         minifyInternalExports: false,
-        chunkFileNames: '[format]/[name].js',
+        chunkFileNames: '[format]/define/index.js',
         entryFileNames: (chunkInfo) => chunkInfo.name === 'index'
           ? '[format]/[name].js' : '[format]/[name]/index.js'
       },
