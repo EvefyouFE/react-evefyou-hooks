@@ -7,13 +7,14 @@
  * Copyright (c) 2023 by EvefyouFE/evef, All Rights Reserved. 
  */
 import { UsePropsStateReturnType } from "@/types/hooks";
+import { is } from "ramda";
 import { useEffect, useState } from "react";
 
 
 export function usePropsState<T>(props: T): UsePropsStateReturnType<T> {
     const [propsState, setPropsState] = useState<T>(props);
     useEffect(() => {
-        props && setPropsState(p => !Object.is(props, p) ? { ...p, ...props } : p)
+        props && setPropsState(p => !Object.is(props, p) ? is(Object, p) ? { ...p, ...props } : props : p)
     }, [props])
 
     return [propsState, setPropsState]
