@@ -18,8 +18,8 @@ dependencies:
     specifier: '>=18.2.0'
     version: 18.2.0(react@18.2.0)
   react-evefyou-common:
-    specifier: '>=1.0.18'
-    version: 1.0.18(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0)
+    specifier: '>=1.0.19'
+    version: 1.0.19(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0)
   recoil:
     specifier: '>=0.7.7'
     version: 0.7.7(react-dom@18.2.0)(react@18.2.0)
@@ -1934,8 +1934,8 @@ packages:
     resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
     dev: false
 
-  /js-evefyou-utils@1.0.2(moment@2.29.4)(ramda@0.29.0)(uuid@9.0.0):
-    resolution: {integrity: sha512-j5emFuHAIKHk8V9cMMg4n+4t7c/yB+DIm8oalmESLS3a+EWWQWzfPoPxpbSP+E/XZiVdJ1MXcZxaGCI2m9ZMew==}
+  /js-evefyou-utils@1.0.3(moment@2.29.4)(ramda@0.29.0)(uuid@9.0.0):
+    resolution: {integrity: sha512-gPGbrZaVC2HFPeoc90JOho9MMdm7unmz/vv++yinl0UyT5SqQXXRXkLMTEPX6VW24cfDD1IDDBTvBJ2PqxBf1A==}
     peerDependencies:
       moment: '>=2.29.4'
       ramda: '>=0.29.0'
@@ -2300,8 +2300,8 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /react-evefyou-common@1.0.18(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0):
-    resolution: {integrity: sha512-DInbUV2IQXKpIVlZIt2T+VWg4cst8VWIBgYH5wsXzYOQ5tNE9Eizz4FpwB6qKXs1+xawuYKZBA02J7OpQfI57Q==}
+  /react-evefyou-common@1.0.19(moment@2.29.4)(ramda@0.29.0)(react-dom@18.2.0)(react-intl@6.4.4)(react@18.2.0)(uuid@9.0.0):
+    resolution: {integrity: sha512-dFunBKKKBgyKPatC+FmnrBGFwO+mV5mzVm+05JTXqbb+gLIdoXDQxYJHBpTQTkkGhG4EOKF5+NYkcxajgtPNsw==}
     peerDependencies:
       moment: '>=2.29.4'
       ramda: '>=0.29.0'
@@ -2310,7 +2310,7 @@ packages:
       react-intl: '>=6.4.4'
       uuid: '>=9.0.0'
     dependencies:
-      js-evefyou-utils: 1.0.2(moment@2.29.4)(ramda@0.29.0)(uuid@9.0.0)
+      js-evefyou-utils: 1.0.3(moment@2.29.4)(ramda@0.29.0)(uuid@9.0.0)
       moment: 2.29.4
       ramda: 0.29.0
       react: 18.2.0
