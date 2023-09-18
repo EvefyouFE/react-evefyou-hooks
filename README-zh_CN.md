@@ -1,5 +1,4 @@
-# react-evefyou-hooks<p align="center">
-
+<p align="center">
   <a href="https://ant.design">
     <img width="200" src="">
   </a>
@@ -9,15 +8,15 @@
 
 <div align="left">
 
-Simple and easy to use react application template design UI library.
+Inheritable state hook library containing getters, setters, actions
 
 </div>
 
-English | [中文](./README-zh_CN.md)
+中文 | [English](./README.md)
 
-## ✨ Features
+## ✨ 特性
 
-- define inheritable state hooks and support typescript
+- 定义可继承的状态钩子并支持 typescript
 
 ## 📦 Install
 
@@ -33,9 +32,9 @@ yarn add react-evefyou-hooks
 pnpm add react-evefyou-hooks
 ```
 
-## 🔨 Usage
+## 🔨 使用
 
-### Define store state
+### 定义 store state
 
 ```
 export const DEFAULT_USER_STATE: UserState = {
@@ -97,7 +96,7 @@ export const useUserRecoilState = defineRecoilValue({
 }, userAtom)
 ```
 
-### Define inheritable state hook
+### 定义 可继承 state hook
 
 ```
 export const defineActiveItemsState = <
