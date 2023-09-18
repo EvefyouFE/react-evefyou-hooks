@@ -8,7 +8,7 @@
 
 <div align="left">
 
-Inheritable state hook library containing getters, setters, actions
+包含 getter, setter, actions 的可继承的状态钩子库
 
 </div>
 

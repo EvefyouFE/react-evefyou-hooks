@@ -9,7 +9,7 @@
 
 <div align="left">
 
-include getters, setters, actions
+Inheritable state hook library containing getters, setters, actions
 
 </div>
 
