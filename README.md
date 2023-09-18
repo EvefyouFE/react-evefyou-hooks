@@ -9,7 +9,7 @@
 
 <div align="left">
 
-Simple and easy to use react application template design UI library.
+include getters, setters, actions
 
 </div>
 
